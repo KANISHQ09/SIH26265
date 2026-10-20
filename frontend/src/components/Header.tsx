@@ -165,23 +165,23 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center gap-2.5 bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 text-white px-3.5 py-2 rounded-lg text-xs font-medium shadow-sm cursor-pointer transition-all"
+            className="flex items-center gap-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 hover:border-slate-300 px-3.5 py-2 rounded-xl text-xs font-medium shadow-xs cursor-pointer transition-all"
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
             <div className="text-left">
-              <div className="text-[10px] text-slate-400 leading-none">Acting Role</div>
-              <div className="font-semibold text-slate-100">
+              <div className="text-[10px] text-slate-500 leading-none font-medium">Acting Role</div>
+              <div className="font-bold text-slate-900">
                 {currentRole.replace("_", " ")}
               </div>
             </div>
-            <UserCheck className="w-4 h-4 ml-1 opacity-70" />
+            <UserCheck className="w-4 h-4 ml-1 text-slate-400" />
           </button>
 
           {/* Role Dropdown Menu */}
           {showRoleMenu && (
             <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 z-50">
               <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                Switch Perspective (Hackathon Demo)
+                Switch Perspective (System Roles)
               </div>
               <div className="py-1 max-h-80 overflow-y-auto space-y-1">
                 {roleOptions.map((opt) => (

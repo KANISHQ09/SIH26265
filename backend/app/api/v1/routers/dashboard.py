@@ -77,7 +77,11 @@ async def get_dashboard_summary(
     pending_scrutiny = (await db.execute(stmt_scrutiny)).scalar() or 0
 
     # 7. Active discrepancies
-    stmt_disc = select(func.count(Discrepancy.id)).where(Discrepancy.status == DiscrepancyStatus.OPEN)
+    stmt_disc = select(func.count(Discrepancy.id)).join(Instrument, Discrepancy.instrument_id == Instrument.id).where(Discrepancy.status == DiscrepancyStatus.OPEN)
+    if current_user.role == UserRole.INSTITUTION_USER:
+        stmt_disc = stmt_disc.where(Instrument.institution_id == current_user.institution_id)
+    elif current_user.role == UserRole.FINANCE_OFFICER:
+        stmt_disc = stmt_disc.where(Discrepancy.rule_code.in_(["AMOUNT_MISMATCH", "AMOUNT_BELOW_REQUIRED", "LIEN_NOT_MARKED"]))
     active_discrepancies = (await db.execute(stmt_disc)).scalar() or 0
 
     return DashboardSummaryResponse(

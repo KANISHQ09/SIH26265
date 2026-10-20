@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.core.deps import get_current_user, require_roles
 from app.models.enums import UserRole, DiscrepancyStatus
-from app.models.entities import Discrepancy, User
+from app.models.entities import Discrepancy, User, Instrument
 from app.schemas.discrepancy import DiscrepancyResponse, DiscrepancyResolveRequest
 
 router = APIRouter(prefix="/discrepancies", tags=["Discrepancies"])
@@ -25,14 +25,27 @@ async def list_instrument_discrepancies(
 
 @router.get("", response_model=List[DiscrepancyResponse])
 async def list_all_open_discrepancies(
-    current_user: User = Depends(require_roles(
-        UserRole.SCRUTINY_OFFICER, 
-        UserRole.SECTION_HEAD, 
-        UserRole.ADMIN
-    )),
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = select(Discrepancy).where(Discrepancy.status == DiscrepancyStatus.OPEN).order_by(Discrepancy.created_at.desc())
+    stmt = (
+        select(Discrepancy)
+        .join(Instrument, Discrepancy.instrument_id == Instrument.id)
+        .where(Discrepancy.status == DiscrepancyStatus.OPEN)
+    )
+
+    # Multi-tenant isolation for institutions
+    if current_user.role == UserRole.INSTITUTION_USER:
+        stmt = stmt.where(Instrument.institution_id == current_user.institution_id)
+    elif current_user.role == UserRole.FINANCE_OFFICER:
+        # Finance officers focus on financial discrepancy rules
+        stmt = stmt.where(
+            Discrepancy.rule_code.in_([
+                "AMOUNT_MISMATCH", "AMOUNT_BELOW_REQUIRED", "LIEN_NOT_MARKED"
+            ])
+        )
+
+    stmt = stmt.order_by(Discrepancy.created_at.desc())
     result = await db.execute(stmt)
     return list(result.scalars().all())
 

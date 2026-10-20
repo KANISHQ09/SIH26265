@@ -27,8 +27,9 @@ async def list_instruments(
     institution_id: Optional[str] = None,
     trust_level: Optional[TrustLevel] = None,
     search: Optional[str] = None,
+    queue_only: bool = Query(False),
     page: int = Query(1, ge=1),
-    page_size: int = Query(25, ge=1, le=100),
+    page_size: int = Query(50, ge=1, le=100),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -48,6 +49,34 @@ async def list_instruments(
         stmt = stmt.where(Instrument.institution_id == current_user.institution_id)
     elif institution_id:
         stmt = stmt.where(Instrument.institution_id == institution_id)
+
+    # Role-specific queue filter
+    if queue_only:
+        if current_user.role == UserRole.SCRUTINY_OFFICER:
+            stmt = stmt.where(Instrument.status.in_([
+                InstrumentStatus.SUBMITTED, 
+                InstrumentStatus.UNDER_SCRUTINY, 
+                InstrumentStatus.DISCREPANCY_FLAGGED
+            ]))
+        elif current_user.role == UserRole.SECTION_HEAD:
+            stmt = stmt.where(Instrument.status.in_([
+                InstrumentStatus.OVERDUE, 
+                InstrumentStatus.DISCREPANCY_FLAGGED, 
+                InstrumentStatus.EXPIRING,
+                InstrumentStatus.RELEASE_REQUESTED
+            ]))
+        elif current_user.role == UserRole.FINANCE_OFFICER:
+            stmt = stmt.where(Instrument.status.in_([
+                InstrumentStatus.RELEASE_REQUESTED, 
+                InstrumentStatus.RELEASE_UNDER_REVIEW, 
+                InstrumentStatus.RELEASED,
+                InstrumentStatus.ACTIVE
+            ]))
+        elif current_user.role == UserRole.COMPETENT_AUTHORITY:
+            stmt = stmt.where(Instrument.status.in_([
+                InstrumentStatus.RELEASE_UNDER_REVIEW, 
+                InstrumentStatus.OVERDUE
+            ]))
 
     if status:
         stmt = stmt.where(Instrument.status == status)
