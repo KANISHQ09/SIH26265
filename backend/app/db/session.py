@@ -4,6 +4,8 @@ from app.core.config import settings
 
 import re
 
+from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+
 # Database engine
 db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
@@ -11,16 +13,40 @@ if db_url.startswith("postgres://"):
 elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+asyncpg://"):
     db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
-# asyncpg does not accept 'sslmode' query param; remove it safely
-if "sslmode=" in db_url:
-    db_url = re.sub(r'[\?&]sslmode=[^&]+', '', db_url)
-    if "?" not in db_url and "&" in db_url:
-        db_url = db_url.replace("&", "?", 1)
-
-# SQLite needs check_same_thread=False
 connect_args = {}
+
 if "sqlite" in db_url:
+    # SQLite needs check_same_thread=False
     connect_args = {"check_same_thread": False}
+else:
+    # asyncpg does not accept libpq query params (sslmode, channel_binding, endpoint, etc.)
+    # Strip them from URL and configure SSL safely via connect_args
+    parsed = urlsplit(db_url)
+    unsupported_params = {
+        "channel_binding",
+        "sslmode",
+        "sslrootcert",
+        "sslcert",
+        "sslkey",
+        "sslpassword",
+        "gssencmode",
+        "endpoint",
+        "pooler",
+    }
+    query_params = parse_qsl(parsed.query, keep_blank_values=True)
+    has_ssl_request = any(k.lower() == "sslmode" and v.lower() in ("require", "verify-ca", "verify-full") for k, v in query_params)
+    
+    if "neon.tech" in (parsed.hostname or "") or "supabase.co" in (parsed.hostname or "") or has_ssl_request:
+        connect_args["ssl"] = True
+
+    filtered_query = [(k, v) for k, v in query_params if k.lower() not in unsupported_params]
+    db_url = urlunsplit((
+        parsed.scheme,
+        parsed.netloc,
+        parsed.path,
+        urlencode(filtered_query),
+        parsed.fragment,
+    ))
 
 engine = create_async_engine(
     db_url,
