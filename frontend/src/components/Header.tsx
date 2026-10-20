@@ -82,25 +82,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="border-b border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 sticky top-0 z-40 shadow-xs">
-      {/* Top Govt Bar */}
-      <div className="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-slate-800">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold tracking-wide text-slate-100">
-            ALL INDIA COUNCIL FOR TECHNICAL EDUCATION
-          </span>
-          <span className="text-slate-500">|</span>
-          <span className="text-slate-400">Regulation Bureau • Ministry of Education</span>
-        </div>
-        <div className="flex items-center gap-4 text-[11px]">
-          <span className="bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded border border-blue-700/50">
-            SIH Problem ID: 26265
-          </span>
-          <span className="text-emerald-400 flex items-center gap-1 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            CBS & SFMS Gateway: Active
-          </span>
-        </div>
-      </div>
 
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
