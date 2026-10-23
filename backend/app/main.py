@@ -61,6 +61,7 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/health")
+@app.head("/health")
 async def health_check():
     return {
         "status": "healthy",
@@ -71,9 +72,11 @@ async def health_check():
 
 
 @app.get("/")
+@app.head("/")
 async def root():
     return {
         "message": "Welcome to Zetsu: AICTE Security Deposit / FDR Management Portal API",
         "docs": f"{settings.API_V1_STR}/docs",
         "health": "/health"
     }
+
