@@ -462,11 +462,11 @@ export default function Home() {
         onResetTime={handleResetTime}
       />
 
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 flex-1 flex flex-col gap-6">
+      <main className="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 flex flex-col gap-4 sm:gap-6">
         {/* Top Banner & Audit Access */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               {roleConfig.deskTitle}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -474,10 +474,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             <button
               onClick={() => setShowAuditModal(true)}
-              className="px-3.5 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-xs cursor-pointer transition-colors"
+              className="flex-1 sm:flex-initial justify-center px-3.5 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-xs cursor-pointer transition-colors whitespace-nowrap"
             >
               <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               Cryptographic Audit Chain
@@ -486,7 +486,7 @@ export default function Home() {
             {currentRole !== "AUDITOR" && (
               <button
                 onClick={() => setShowAddModal(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-md shadow-blue-500/20 cursor-pointer transition-all"
+                className="flex-1 sm:flex-initial justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-md shadow-blue-500/20 cursor-pointer transition-all whitespace-nowrap"
               >
                 <Plus className="w-4 h-4" />
                 {roleConfig.primaryActionText}
@@ -496,29 +496,29 @@ export default function Home() {
         </div>
 
         {/* Active Role Context Ribbon */}
-        <div className="bg-gradient-to-r from-blue-50 via-indigo-50/50 to-white dark:from-slate-900 dark:via-blue-950/20 dark:to-slate-900 p-3.5 rounded-2xl border border-blue-200/80 dark:border-blue-900/50 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs">
+        <div className="bg-gradient-to-r from-blue-50 via-indigo-50/50 to-white dark:from-slate-900 dark:via-blue-950/20 dark:to-slate-900 p-3 sm:p-3.5 rounded-2xl border border-blue-200/80 dark:border-blue-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-start sm:items-center gap-2.5 sm:gap-3">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5 sm:mt-0">
               {currentRole === "INSTITUTION_USER" ? <Building2 className="w-4 h-4" /> : currentRole === "FINANCE_OFFICER" ? <FileText className="w-4 h-4" /> : <ShieldCheck className="w-4 h-4" />}
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <span className="font-bold text-slate-900 dark:text-white">
                   Active Operational Scope:
                 </span>
-                <span className="font-semibold text-blue-700 dark:text-blue-300 bg-blue-100/80 dark:bg-blue-950 px-2 py-0.5 rounded-md">
+                <span className="font-semibold text-blue-700 dark:text-blue-300 bg-blue-100/80 dark:bg-blue-950 px-2 py-0.5 rounded-md text-[11px]">
                   {roleConfig.badge}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 Data views, queue filters, action authorization, and compliance thresholds adapt strictly to this role.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px]">
+          <div className="flex items-center gap-2 text-[11px] self-start sm:self-auto shrink-0">
             <span className="text-slate-500">Authenticated:</span>
-            <span className="font-mono font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+            <span className="font-mono font-semibold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 truncate max-w-[200px]" title={currentUser?.email}>
               {currentUser?.email || "Role Session Active"}
             </span>
           </div>
@@ -526,23 +526,23 @@ export default function Home() {
 
         {/* Dynamic Role-Specific KPI Cards */}
         {summary && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
             {roleConfig.kpiCards(summary, kpis).map((card, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between"
+                className="bg-white dark:bg-slate-900 p-3.5 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between"
               >
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider line-clamp-1">
                   {card.label}
                 </span>
                 <div
-                  className={`mt-2 text-2xl font-black ${
+                  className={`mt-1.5 sm:mt-2 text-xl sm:text-2xl font-black ${
                     card.color || "text-slate-900 dark:text-white"
                   }`}
                 >
                   {card.value}
                 </div>
-                <span className="text-[11px] text-slate-400 mt-1">
+                <span className="text-[10px] sm:text-[11px] text-slate-400 mt-1 line-clamp-1">
                   {card.caption}
                 </span>
               </div>
@@ -552,9 +552,9 @@ export default function Home() {
 
         {/* 3-Tier Trust Level Provenance Ribbon */}
         {summary && summary.trust_breakdown && (
-          <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-blue-600" />
+          <div className="bg-white dark:bg-slate-900 p-3.5 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
               <div>
                 <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   Three-Tier Trust-Level Separation (Problem Statement Core Differentiator)
@@ -565,11 +565,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
               {summary.trust_breakdown.map((t) => (
                 <div
                   key={t.trust_level}
-                  className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs"
+                  className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800/80 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs"
                 >
                   <TrustBadge trust={t.trust_level as any} size="sm" />
                   <span className="font-bold font-mono text-slate-800 dark:text-slate-100">
@@ -582,64 +582,64 @@ export default function Home() {
         )}
 
         {/* Main Tab Navigation */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 text-xs font-semibold gap-6">
+        <div className="flex border-b border-slate-200 dark:border-slate-800 text-xs font-semibold gap-3 sm:gap-6 overflow-x-auto scrollbar-none pb-px">
           <button
             onClick={() => setActiveTab("register")}
-            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 ${
+            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "register"
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
             }`}
           >
-            <Building2 className="w-4 h-4" />
+            <Building2 className="w-4 h-4 shrink-0" />
             {roleConfig.registerTabName} ({filteredInstruments.length})
           </button>
 
           <button
             onClick={() => setActiveTab("discrepancies")}
-            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 ${
+            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "discrepancies"
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
             }`}
           >
-            <AlertTriangle className="w-4 h-4 text-rose-500" />
+            <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" />
             {roleConfig.discrepancyTabName} ({discrepancies.filter((d) => d.status === "OPEN").length})
           </button>
 
           <button
             onClick={() => setActiveTab("release")}
-            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 ${
+            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "release"
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
             }`}
           >
-            <FileText className="w-4 h-4 text-purple-500" />
+            <FileText className="w-4 h-4 text-purple-500 shrink-0" />
             {roleConfig.releaseTabName} ({releaseRequests.length})
           </button>
 
           <button
             onClick={() => setActiveTab("reports")}
-            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 ${
+            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "reports"
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
             }`}
           >
-            <Download className="w-4 h-4 text-emerald-500" />
+            <Download className="w-4 h-4 text-emerald-500 shrink-0" />
             Reports Center
           </button>
 
           <button
             onClick={() => setActiveTab("impact")}
-            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 ${
+            className={`pb-3 border-b-2 cursor-pointer transition-colors flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "impact"
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
             }`}
           >
-            <TrendingUp className="w-4 h-4 text-indigo-500" />
+            <TrendingUp className="w-4 h-4 text-indigo-500 shrink-0" />
             Measurable Impact (PS Metrics)
           </button>
         </div>
@@ -648,9 +648,9 @@ export default function Home() {
         {activeTab === "register" && (
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col">
             {/* Filter Toolbar */}
-            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-850/50">
-              <div className="flex items-center gap-3 flex-1 max-w-lg">
-                <div className="relative w-full">
+            <div className="p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-850/50">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 flex-1 w-full max-w-2xl">
+                <div className="relative flex-1">
                   <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                   <input
                     type="text"
@@ -663,10 +663,10 @@ export default function Home() {
 
                 {/* Queue View Switcher for Officers */}
                 {hasRoleQueue && (
-                  <div className="flex items-center bg-slate-200/80 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs shrink-0">
+                  <div className="flex items-center justify-center bg-slate-200/80 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs shrink-0">
                     <button
                       onClick={() => setViewScope("ROLE_QUEUE")}
-                      className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer ${
+                      className={`flex-1 sm:flex-initial px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
                         viewScope === "ROLE_QUEUE"
                           ? "bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
@@ -676,7 +676,7 @@ export default function Home() {
                     </button>
                     <button
                       onClick={() => setViewScope("ALL")}
-                      className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer ${
+                      className={`flex-1 sm:flex-initial px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
                         viewScope === "ALL"
                           ? "bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-300 shadow-xs"
                           : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
@@ -688,25 +688,27 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 text-slate-400" />
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="text-xs py-1.5 px-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200"
-                >
-                  <option value="ALL">All Statuses</option>
-                  <option value="ACTIVE">Active</option>
-                  <option value="EXPIRING">Expiring Soon</option>
-                  <option value="OVERDUE">Overdue Critical</option>
-                  <option value="DISCREPANCY_FLAGGED">Discrepancy Flagged</option>
-                  <option value="RELEASE_UNDER_REVIEW">Release In Review</option>
-                  <option value="RELEASED">Released</option>
-                </select>
+              <div className="flex items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
+                <div className="flex items-center gap-1.5 flex-1 sm:flex-initial">
+                  <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="w-full sm:w-auto text-xs py-1.5 px-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200"
+                  >
+                    <option value="ALL">All Statuses</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="EXPIRING">Expiring Soon</option>
+                    <option value="OVERDUE">Overdue Critical</option>
+                    <option value="DISCREPANCY_FLAGGED">Discrepancy Flagged</option>
+                    <option value="RELEASE_UNDER_REVIEW">Release In Review</option>
+                    <option value="RELEASED">Released</option>
+                  </select>
+                </div>
 
                 <button
                   onClick={refreshData}
-                  className="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer"
+                  className="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer shrink-0"
                   title="Refresh Register"
                 >
                   <RefreshCw className="w-4 h-4" />
@@ -715,8 +717,8 @@ export default function Home() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto w-full">
+              <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase font-semibold text-[10px] tracking-wider">
                   <tr>
                     <th className="py-3 px-4">FDR Reference</th>
@@ -906,8 +908,8 @@ export default function Home() {
                 </p>
               </div>
             ) : (
-              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-                <table className="w-full text-left text-xs">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-x-auto">
+                <table className="w-full text-left text-xs min-w-[680px]">
                   <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase font-semibold text-[10px] tracking-wider">
                     <tr>
                       <th className="py-3 px-4">Request ID</th>
@@ -1068,8 +1070,8 @@ export default function Home() {
             </div>
 
             {/* Benchmark Comparison Table */}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs">
-              <table className="w-full text-left text-xs">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-x-auto shadow-xs">
+              <table className="w-full text-left text-xs min-w-[640px]">
                 <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase font-semibold text-[10px] tracking-wider">
                   <tr>
                     <th className="py-3 px-4">Performance Dimension</th>

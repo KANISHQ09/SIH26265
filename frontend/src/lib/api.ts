@@ -13,6 +13,61 @@ class ApiClient {
   private memoryDiscrepancies = [...MOCK_DISCREPANCIES];
   private memoryReleases = [...MOCK_RELEASES];
   private simulatedDate = new Date().toISOString().split("T")[0];
+  private isAuditTampered = false;
+  private tamperedAuditId: number | null = null;
+  private memoryAuditLogs = [
+    {
+      id: 1,
+      entity_type: "Instrument",
+      entity_id: "inst-fdr-001",
+      action: "INSTRUMENT_CREATED",
+      actor_id: "usr-inst-01",
+      actor_email: "institution@iitdelhi.ac.in",
+      actor_role: "INSTITUTION_USER",
+      prev_hash: "0000000000000000000000000000000000000000000000000000000000000000",
+      row_hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      current_hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      at: "2026-10-24T09:15:30.000Z",
+      created_at: "2026-10-24T09:15:30.000Z",
+      ip_address: "103.27.8.42",
+      before_json: null,
+      after_json: { status: "DRAFT", amount: 1500000, reference_number: "FDR-PNB-2026-8812" },
+    },
+    {
+      id: 2,
+      entity_type: "Verification",
+      entity_id: "inst-fdr-001",
+      action: "BANK_SFMS_MATCHED",
+      actor_id: "usr-scrutiny-01",
+      actor_email: "scrutiny@aicte-india.org",
+      actor_role: "SCRUTINY_OFFICER",
+      prev_hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      row_hash: "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9",
+      current_hash: "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9",
+      at: "2026-10-25T11:42:15.000Z",
+      created_at: "2026-10-25T11:42:15.000Z",
+      ip_address: "14.139.58.11",
+      before_json: { trust_level: "SUBMITTED" },
+      after_json: { trust_level: "BANK_CONFIRMED", sfms_code: "SFMS-MATCH-ACK-902" },
+    },
+    {
+      id: 3,
+      entity_type: "Discrepancy",
+      entity_id: "inst-fdr-003",
+      action: "DISCREPANCY_FLAGGED",
+      actor_id: "usr-scrutiny-01",
+      actor_email: "scrutiny@aicte-india.org",
+      actor_role: "SCRUTINY_OFFICER",
+      prev_hash: "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9",
+      row_hash: "c23f11a876bcde09a34e52d7da7dabfac484efe37a5380ee9088f7ace2efcd01",
+      current_hash: "c23f11a876bcde09a34e52d7da7dabfac484efe37a5380ee9088f7ace2efcd01",
+      at: "2026-10-26T14:05:08.000Z",
+      created_at: "2026-10-26T14:05:08.000Z",
+      ip_address: "14.139.58.11",
+      before_json: { discrepancies: 0 },
+      after_json: { rule_code: "R-02", severity: "HIGH", message: "Maturity date less than mandatory 3-year AICTE threshold" },
+    },
+  ];
 
   constructor() {
     if (typeof window !== "undefined") {
@@ -246,46 +301,67 @@ class ApiClient {
     // Audit
     if (endpoint.startsWith("/audit")) {
       if (endpoint === "/audit/verify-chain") {
+        if (this.isAuditTampered) {
+          const targetId = this.tamperedAuditId || 1;
+          return {
+            is_valid: false,
+            broken_at_audit_id: targetId,
+            message: `Tampering detected at Audit ID #${targetId}: payload contents modified! SHA-256 hash mismatch.`,
+            total_records: this.memoryAuditLogs.length,
+            genesis_hash: "0000000000000000000000000000000000000000000000000000000000000000",
+            latest_hash: this.memoryAuditLogs[this.memoryAuditLogs.length - 1]?.row_hash,
+            tamper_detected: true,
+          } as unknown as T;
+        }
         return {
           is_valid: true,
-          total_records: 128,
+          broken_at_audit_id: null,
+          message: `Chain integrity verified: ${this.memoryAuditLogs.length} audit entries cryptographically valid (SHA-256 intact).`,
+          total_records: this.memoryAuditLogs.length,
           genesis_hash: "0000000000000000000000000000000000000000000000000000000000000000",
-          latest_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          latest_hash: this.memoryAuditLogs[this.memoryAuditLogs.length - 1]?.row_hash,
           tamper_detected: false,
         } as unknown as T;
       }
-      return [
-        {
-          id: 1,
-          entity_type: "Instrument",
-          entity_id: "inst-fdr-001",
-          action: "INSTRUMENT_CREATED",
-          actor_email: "institution@iitdelhi.ac.in",
-          actor_role: "INSTITUTION_USER",
-          current_hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
-          created_at: new Date().toISOString(),
-        },
-        {
-          id: 2,
-          entity_type: "Verification",
-          entity_id: "inst-fdr-001",
-          action: "BANK_SFMS_MATCHED",
-          actor_email: "scrutiny@aicte-india.org",
-          actor_role: "SCRUTINY_OFFICER",
-          current_hash: "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9",
-          created_at: new Date().toISOString(),
-        },
-        {
-          id: 3,
-          entity_type: "Discrepancy",
-          entity_id: "inst-fdr-003",
-          action: "DISCREPANCY_FLAGGED",
-          actor_email: "scrutiny@aicte-india.org",
-          actor_role: "SCRUTINY_OFFICER",
-          current_hash: "c23f11a876bcde09a34e52d7da7dabfac484efe37a5380ee9088f7ace2efcd01",
-          created_at: new Date().toISOString(),
-        },
-      ] as unknown as T;
+
+      if (endpoint.startsWith("/audit/tamper-demo")) {
+        const parts = endpoint.split("audit_id=");
+        const targetId = parts[1] ? Number(parts[1]) : 1;
+        this.isAuditTampered = true;
+        this.tamperedAuditId = targetId;
+        const target = this.memoryAuditLogs.find((l) => l.id === targetId);
+        if (target) {
+          target.action = "TAMPERED_ACTION_UNAUTHORIZED";
+        }
+        return {
+          tamper_executed: true,
+          tampered_audit_id: targetId,
+          chain_verification_result: {
+            is_valid: false,
+            broken_at_audit_id: targetId,
+            message: `Tampering detected at Audit ID #${targetId}: payload contents modified! SHA-256 hash mismatch.`,
+          },
+        } as unknown as T;
+      }
+
+      if (endpoint.startsWith("/audit/tamper-reset")) {
+        this.isAuditTampered = false;
+        this.tamperedAuditId = null;
+        const target = this.memoryAuditLogs.find((l) => l.id === 1);
+        if (target) {
+          target.action = "INSTRUMENT_CREATED";
+        }
+        return {
+          reset_executed: true,
+          chain_verification_result: {
+            is_valid: true,
+            broken_at_audit_id: null,
+            message: `Chain integrity verified: ${this.memoryAuditLogs.length} audit entries cryptographically valid (SHA-256 intact).`,
+          },
+        } as unknown as T;
+      }
+
+      return [...this.memoryAuditLogs] as unknown as T;
     }
 
     return {} as unknown as T;
@@ -456,6 +532,12 @@ class ApiClient {
 
   async triggerTamperDemo(auditId: number) {
     return this.request<any>(`/audit/tamper-demo?audit_id=${auditId}`, {
+      method: "POST",
+    });
+  }
+
+  async resetTamperDemo() {
+    return this.request<any>("/audit/tamper-reset", {
       method: "POST",
     });
   }
