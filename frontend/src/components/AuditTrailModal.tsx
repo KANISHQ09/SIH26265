@@ -266,8 +266,8 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({ onClose }) => 
               <p className="text-sm">No audit logs recorded yet.</p>
             </div>
           ) : (
-            <div className="border border-stone-200 rounded-2xl overflow-hidden shadow-xs bg-white">
-              <table className="w-full text-left text-xs">
+            <div className="border border-stone-200 rounded-2xl overflow-x-auto shadow-xs bg-white">
+              <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-stone-100/75 text-stone-600 uppercase font-semibold text-[10px] tracking-wider border-b border-stone-200">
                   <tr>
                     <th className="py-3 px-3 w-12 text-center">#</th>
@@ -331,14 +331,16 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({ onClose }) => 
                           <td className="py-3 px-3">
                             <div className="flex items-center gap-1.5">
                               <span 
-                                className={`font-mono text-[11px] px-2.5 py-1 rounded-full max-w-[200px] sm:max-w-xs truncate ${
+                                className={`font-mono text-[11px] px-2.5 py-1 rounded-full whitespace-nowrap shadow-2xs ${
                                   isTamperedRow 
                                     ? "bg-rose-100 text-rose-800 font-bold border border-rose-200" 
                                     : "bg-stone-50 text-stone-700 border border-stone-200/80"
                                 }`} 
-                                title={rowHash}
+                                title={`Full Hash: ${rowHash}`}
                               >
-                                {rowHash}
+                                {rowHash.length > 20 
+                                  ? `${rowHash.slice(0, 10)}...${rowHash.slice(-8)}` 
+                                  : rowHash}
                               </span>
                               {rowHash !== "—" && (
                                 <button
@@ -347,7 +349,7 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({ onClose }) => 
                                     e.stopPropagation();
                                     copyToClipboard(rowHash);
                                   }}
-                                  className="p-1 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 transition-colors cursor-pointer"
+                                  className="p-1 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 transition-colors cursor-pointer shrink-0"
                                   title="Copy full SHA-256 hash"
                                 >
                                   {copiedHash === rowHash ? (
