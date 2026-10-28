@@ -119,9 +119,9 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-[#FAF9F5] border border-stone-200 rounded-3xl w-full max-w-6xl max-h-[95vh] flex flex-col shadow-2xl overflow-hidden font-sans">
+      <div className="bg-[#FAF9F5] border border-stone-200 rounded-3xl w-full max-w-6xl max-h-[92vh] h-[92vh] flex flex-col shadow-2xl overflow-hidden font-sans">
         {/* Workspace Modal Header */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-stone-200/80 flex items-start sm:items-center justify-between gap-3 bg-white">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-stone-200/80 flex items-start sm:items-center justify-between gap-3 bg-white shrink-0">
           <div className="flex items-start sm:items-center gap-3">
             <span className="p-2.5 bg-blue-100 text-blue-700 rounded-xl shrink-0 mt-0.5 sm:mt-0 shadow-2xs">
               <FileText className="w-5 h-5" />
@@ -151,9 +151,9 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
         </div>
 
         {/* Split Screen Workspace Body */}
-        <div className="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-stone-200">
+        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-stone-200 overflow-y-auto lg:overflow-hidden">
           {/* LEFT PANEL: Document Viewer & OCR Extraction (Col 5) */}
-          <div className="lg:col-span-5 p-5 bg-stone-100/60 flex flex-col gap-4 overflow-y-auto">
+          <div className="lg:col-span-5 p-5 bg-stone-100/60 flex flex-col gap-4 overflow-y-auto min-h-0 h-full">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-600 flex items-center gap-1.5">
                 <FileText className="w-4 h-4 text-blue-600" />
@@ -282,9 +282,9 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
           </div>
 
           {/* RIGHT PANEL: Scrutiny Form, Trust Badges, Bank Check (Col 7) */}
-          <div className="lg:col-span-7 p-6 bg-white flex flex-col gap-6 overflow-y-auto">
+          <div className="lg:col-span-7 p-6 bg-white flex flex-col gap-6 overflow-y-auto min-h-0 h-full">
             {/* Section 1: Field-Level Trust Checklist */}
-            <div className="space-y-3">
+            <div className="space-y-3 shrink-0">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-stone-600">
                   Field Scrutiny &amp; Trust Verification
@@ -426,12 +426,15 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
             <div className="h-px bg-stone-200"></div>
 
             {/* Section 2: Bank Verification Adapter Integration */}
-            <div className="bg-[#FEF3C7]/40 border border-amber-200 rounded-2xl p-4 space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0" />
-                  <div>
-                    <h4 className="text-xs font-bold text-stone-900">
+            <div className="bg-[#FEF3C7]/40 border border-amber-200 rounded-2xl p-4 sm:p-5 space-y-4 shrink-0">
+              {/* Header: Title + Gateway Badge */}
+              <div className="flex items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="p-2 bg-amber-100 text-amber-800 rounded-xl shrink-0 shadow-2xs">
+                    <ShieldCheck className="w-4 h-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-stone-900 truncate">
                       Automated Bank Verification Adapter
                     </h4>
                     <p className="text-[11px] text-stone-500">
@@ -439,32 +442,39 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                <span className="hidden sm:inline-flex text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-amber-100/80 text-amber-900 border border-amber-200/60 shrink-0">
+                  Direct API Gateway
+                </span>
+              </div>
+
+              {/* Action Controls: Scenario Selector & Trigger Button */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-0.5">
+                <div className="relative flex-1 min-w-0">
                   <select
                     value={bankScenario}
                     onChange={(e) => setBankScenario(e.target.value)}
-                    className="text-xs p-1.5 bg-white border border-stone-300 rounded-full text-stone-800"
+                    className="w-full text-xs py-2 px-3 bg-white border border-stone-300 rounded-xl text-stone-800 shadow-2xs focus:ring-1 focus:ring-amber-500 focus:outline-hidden pr-8 truncate cursor-pointer"
                   >
                     <option value="MATCH">Scenario: Full Match (Happy Path)</option>
                     <option value="MISMATCH">Scenario: Amount Mismatch (Discrepancy)</option>
                     <option value="NOT_FOUND">Scenario: Not Found in Bank CBS</option>
                     <option value="TIMEOUT">Scenario: Bank Gateway Timeout</option>
                   </select>
-                  <button
-                    onClick={handleBankVerify}
-                    disabled={isVerifyingBank}
-                    className="px-4 py-1.5 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-full text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isVerifyingBank ? "animate-spin" : ""}`} />
-                    {isVerifyingBank ? "Calling Bank..." : "Trigger Bank Check"}
-                  </button>
                 </div>
+                <button
+                  onClick={handleBankVerify}
+                  disabled={isVerifyingBank}
+                  className="px-4 py-2 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-xl text-xs font-bold flex items-center justify-center gap-2 cursor-pointer shadow-xs hover:shadow-md transition-all shrink-0 whitespace-nowrap active:scale-[0.98]"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isVerifyingBank ? "animate-spin" : ""}`} />
+                  <span>{isVerifyingBank ? "Calling Bank..." : "Trigger Bank Check"}</span>
+                </button>
               </div>
 
               {bankResult && (
                 <div className="mt-2 text-xs bg-white p-3.5 rounded-xl border border-amber-200 space-y-1 font-mono">
                   <div className="flex justify-between">
-                    <span className="text-stone-500">Response Status:</span>
+                    <span className="text-stone-500 font-sans font-medium">Response Status:</span>
                     <span className={`font-bold ${bankResult.result === "MATCH" ? "text-emerald-700" : "text-rose-700"}`}>
                       {bankResult.result}
                     </span>
@@ -479,7 +489,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
             </div>
 
             {/* Section 3: State Machine Transitions */}
-            <div className="space-y-2 pt-2">
+            <div className="space-y-2 pt-2 pb-8 shrink-0">
               <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600">
                 Authorized State Transitions
               </h4>
