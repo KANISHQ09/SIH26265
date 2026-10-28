@@ -16,9 +16,9 @@ export const StatusBadge: React.FC<Props> = ({ status }) => {
   > = {
     DRAFT: {
       label: "Draft",
-      bg: "bg-slate-100",
-      text: "text-slate-700",
-      border: "border-slate-300",
+      bg: "bg-stone-100",
+      text: "text-stone-700",
+      border: "border-stone-300",
       icon: FileText,
     },
     SUBMITTED: {
@@ -30,9 +30,9 @@ export const StatusBadge: React.FC<Props> = ({ status }) => {
     },
     UNDER_SCRUTINY: {
       label: "Under Scrutiny",
-      bg: "bg-indigo-50",
-      text: "text-indigo-700",
-      border: "border-indigo-300",
+      bg: "bg-sky-50",
+      text: "text-sky-800",
+      border: "border-sky-300",
       icon: FileCheck,
     },
     DISCREPANCY_FLAGGED: {
@@ -45,92 +45,92 @@ export const StatusBadge: React.FC<Props> = ({ status }) => {
     RESUBMISSION_REQUIRED: {
       label: "Resubmission Required",
       bg: "bg-orange-50",
-      text: "text-orange-700",
+      text: "text-orange-800",
       border: "border-orange-300",
       icon: RotateCcw,
     },
     VERIFIED: {
       label: "Verified",
       bg: "bg-teal-50",
-      text: "text-teal-700",
+      text: "text-teal-800",
       border: "border-teal-300",
       icon: CheckCircle2,
     },
     ACTIVE: {
       label: "Active Valid",
       bg: "bg-emerald-50",
-      text: "text-emerald-700",
+      text: "text-emerald-800",
       border: "border-emerald-300",
       icon: CheckCircle2,
     },
     EXPIRING: {
       label: "Expiring Soon",
       bg: "bg-amber-50",
-      text: "text-amber-700",
+      text: "text-amber-800",
       border: "border-amber-300",
       icon: AlertTriangle,
     },
     RENEWAL_PENDING: {
       label: "Renewal Pending",
       bg: "bg-yellow-50",
-      text: "text-yellow-800",
+      text: "text-yellow-850",
       border: "border-yellow-400",
       icon: Clock,
     },
     OVERDUE: {
       label: "Overdue Critical",
       bg: "bg-red-50",
-      text: "text-red-700",
+      text: "text-red-800",
       border: "border-red-400",
       icon: ShieldAlert,
     },
     MATURED: {
       label: "Matured",
-      bg: "bg-purple-50",
-      text: "text-purple-700",
-      border: "border-purple-300",
+      bg: "bg-amber-50",
+      text: "text-amber-900",
+      border: "border-amber-300",
       icon: Clock,
     },
     RENEWED: {
       label: "Renewed",
-      bg: "bg-slate-100",
-      text: "text-slate-600",
-      border: "border-slate-300",
+      bg: "bg-stone-100",
+      text: "text-stone-600",
+      border: "border-stone-300",
       icon: ArrowRightCircle,
     },
     RELEASE_REQUESTED: {
       label: "Release Requested",
-      bg: "bg-violet-50",
-      text: "text-violet-700",
-      border: "border-violet-300",
+      bg: "bg-amber-50",
+      text: "text-amber-900",
+      border: "border-amber-300",
       icon: Clock,
     },
     RELEASE_UNDER_REVIEW: {
       label: "Release In Review",
-      bg: "bg-violet-100",
-      text: "text-violet-800",
-      border: "border-violet-400",
+      bg: "bg-[#FEF3C7]",
+      text: "text-amber-950",
+      border: "border-amber-300",
       icon: FileCheck,
     },
     RELEASE_APPROVED: {
       label: "Release Approved",
-      bg: "bg-emerald-100",
+      bg: "bg-emerald-50",
       text: "text-emerald-800",
-      border: "border-emerald-400",
+      border: "border-emerald-300",
       icon: CheckCircle2,
     },
     RELEASE_REJECTED: {
       label: "Release Rejected",
-      bg: "bg-rose-100",
+      bg: "bg-rose-50",
       text: "text-rose-800",
-      border: "border-rose-400",
+      border: "border-rose-300",
       icon: XCircle,
     },
     RELEASED: {
       label: "Discharged / Released",
-      bg: "bg-slate-200",
-      text: "text-slate-800",
-      border: "border-slate-400",
+      bg: "bg-stone-200",
+      text: "text-stone-800",
+      border: "border-stone-400",
       icon: CheckCircle2,
     },
   };
@@ -140,7 +140,7 @@ export const StatusBadge: React.FC<Props> = ({ status }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-md border ${cfg.bg} ${cfg.text} ${cfg.border}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold rounded-full border shadow-2xs ${cfg.bg} ${cfg.text} ${cfg.border}`}
     >
       <IconComponent className="w-3.5 h-3.5" />
       {cfg.label}

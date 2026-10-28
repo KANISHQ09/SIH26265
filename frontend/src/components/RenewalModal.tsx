@@ -53,23 +53,23 @@ export const RenewalModal: React.FC<RenewalModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl max-h-[92vh] shadow-2xl overflow-hidden flex flex-col">
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
-          <div className="flex items-center gap-2.5">
-            <span className="p-2 bg-blue-100 dark:bg-blue-950 text-blue-600 rounded-lg shrink-0">
+    <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 font-sans">
+      <div className="bg-[#FAF9F5] border border-stone-200 rounded-3xl w-full max-w-2xl max-h-[92vh] shadow-2xl overflow-hidden flex flex-col">
+        <div className="px-6 py-4 border-b border-stone-200/80 flex items-center justify-between bg-white">
+          <div className="flex items-center gap-3">
+            <span className="p-2.5 bg-amber-100 text-amber-800 rounded-xl shrink-0 shadow-2xs">
               <RefreshCw className="w-5 h-5" />
             </span>
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">
-                FDR Renewal & Replacement Chain
+              <h2 className="font-serif text-lg font-bold text-stone-900">
+                FDR Renewal &amp; Replacement Chain
               </h2>
-              <p className="text-[11px] sm:text-xs text-slate-500">
-                AICTE Regulatory Continuity & Renewal Tracking
+              <p className="text-[11px] sm:text-xs text-stone-500 font-sans">
+                AICTE Regulatory Continuity &amp; Renewal Tracking
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <button onClick={onClose} className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -78,24 +78,24 @@ export const RenewalModal: React.FC<RenewalModalProps> = ({
           {/* Historical Chain Visualization */}
           {chain.length > 0 && (
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500">
                 Unbroken Renewal History Chain
               </h4>
               <div className="space-y-2">
                 {chain.map((item, idx) => (
                   <React.Fragment key={item.id}>
                     <div
-                      className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
+                      className={`p-3.5 rounded-2xl border flex items-center justify-between text-xs shadow-2xs ${
                         item.is_current
-                          ? "bg-blue-50/70 border-blue-300 dark:bg-blue-950/30 dark:border-blue-800"
-                          : "bg-slate-50 border-slate-200 dark:bg-slate-800/40 dark:border-slate-700"
+                          ? "bg-white border-amber-300 ring-1 ring-amber-200"
+                          : "bg-white border-stone-200"
                       }`}
                     >
                       <div>
-                        <div className="font-bold font-mono text-slate-900 dark:text-slate-100">
+                        <div className="font-bold font-mono text-stone-900">
                           {item.reference_number}
                         </div>
-                        <div className="text-[11px] text-slate-500">
+                        <div className="text-[11px] text-stone-500 mt-0.5">
                           {item.issue_date} &rarr; {item.maturity_date}
                         </div>
                       </div>
@@ -105,7 +105,7 @@ export const RenewalModal: React.FC<RenewalModalProps> = ({
                       </div>
                     </div>
                     {idx < chain.length - 1 && (
-                      <div className="flex justify-center text-slate-400">
+                      <div className="flex justify-center text-stone-400">
                         <ArrowDown className="w-4 h-4" />
                       </div>
                     )}
@@ -116,53 +116,53 @@ export const RenewalModal: React.FC<RenewalModalProps> = ({
           )}
 
           {/* Form to submit renewal child */}
-          <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+          <div className="space-y-3 pt-3 border-t border-stone-200 bg-white p-5 rounded-2xl border shadow-xs">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600">
               Submit Replacement Instrument
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div>
-                <label className="font-medium text-slate-700 dark:text-slate-300">
+                <label className="font-medium text-stone-700">
                   New FDR Reference *
                 </label>
                 <input
                   type="text"
                   value={referenceNumber}
                   onChange={(e) => setReferenceNumber(e.target.value)}
-                  className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 font-mono text-slate-900 dark:text-white"
+                  className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white font-mono text-stone-900"
                 />
               </div>
               <div>
-                <label className="font-medium text-slate-700 dark:text-slate-300">
+                <label className="font-medium text-stone-700">
                   Renewal Amount (INR) *
                 </label>
                 <input
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
-                  className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 font-mono text-slate-900 dark:text-white"
+                  className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white font-mono text-stone-900"
                 />
               </div>
               <div>
-                <label className="font-medium text-slate-700 dark:text-slate-300">
+                <label className="font-medium text-stone-700">
                   New Issue Date *
                 </label>
                 <input
                   type="date"
                   value={issueDate}
                   onChange={(e) => setIssueDate(e.target.value)}
-                  className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                  className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                 />
               </div>
               <div>
-                <label className="font-medium text-slate-700 dark:text-slate-300">
+                <label className="font-medium text-stone-700">
                   New Maturity Date *
                 </label>
                 <input
                   type="date"
                   value={maturityDate}
                   onChange={(e) => setMaturityDate(e.target.value)}
-                  className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                  className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                 />
               </div>
             </div>
@@ -170,7 +170,7 @@ export const RenewalModal: React.FC<RenewalModalProps> = ({
             <button
               onClick={handleRenew}
               disabled={isSubmitting}
-              className="mt-3 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+              className="mt-3 w-full py-2.5 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-full text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-all"
             >
               <CheckCircle2 className="w-4 h-4" />
               {isSubmitting ? "Linking Renewal Chain..." : "Submit Renewal FDR & Link Chain"}

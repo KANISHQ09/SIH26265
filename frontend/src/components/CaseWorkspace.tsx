@@ -118,17 +118,17 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
   const openDiscrepancies = discrepancies.filter((d) => d.status === "OPEN");
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-6xl max-h-[95vh] flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
+      <div className="bg-[#FAF9F5] border border-stone-200 rounded-3xl w-full max-w-6xl max-h-[95vh] flex flex-col shadow-2xl overflow-hidden font-sans">
         {/* Workspace Modal Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-800 flex items-start sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-800/50">
-          <div className="flex items-start sm:items-center gap-2.5 sm:gap-3">
-            <span className="p-2 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 rounded-lg shrink-0 mt-0.5 sm:mt-0">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-stone-200/80 flex items-start sm:items-center justify-between gap-3 bg-white">
+          <div className="flex items-start sm:items-center gap-3">
+            <span className="p-2.5 bg-blue-100 text-blue-700 rounded-xl shrink-0 mt-0.5 sm:mt-0 shadow-2xs">
               <FileText className="w-5 h-5" />
             </span>
             <div>
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="font-serif text-lg sm:text-xl font-bold text-stone-900">
                   Case Workspace: {instrument.reference_number}
                 </h2>
                 <div className="flex items-center gap-1.5">
@@ -136,7 +136,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                   <TrustBadge trust={instrument.overall_trust} />
                 </div>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5">
                 {instrument.institution?.name || "Institution ID: " + instrument.institution_id} • AICTE Reference: {instrument.institution?.aicte_id}
               </p>
             </div>
@@ -144,123 +144,123 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer transition-colors shrink-0"
+            className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 cursor-pointer transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Split Screen Workspace Body */}
-        <div className="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 dark:divide-slate-800">
+        <div className="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-stone-200">
           {/* LEFT PANEL: Document Viewer & OCR Extraction (Col 5) */}
-          <div className="lg:col-span-5 p-5 bg-slate-50/60 dark:bg-slate-950/40 flex flex-col gap-4 overflow-y-auto">
+          <div className="lg:col-span-5 p-5 bg-stone-100/60 flex flex-col gap-4 overflow-y-auto">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-600 flex items-center gap-1.5">
                 <FileText className="w-4 h-4 text-blue-600" />
                 Uploaded FDR Document
               </h3>
-              <span className="text-[11px] font-mono text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-800">
+              <span className="text-[11px] font-mono text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-300">
                 OCR Confidence: 94%
               </span>
             </div>
 
             {/* Simulated FDR Certificate Visual Document */}
-            <div className="bg-amber-50/80 dark:bg-slate-800 border-2 border-dashed border-amber-300 dark:border-amber-700/60 rounded-xl p-5 shadow-inner text-slate-800 dark:text-slate-200 relative font-serif">
-              <div className="text-center border-b border-amber-200 dark:border-amber-800 pb-3 mb-3">
-                <div className="text-xs tracking-widest text-amber-800 dark:text-amber-400 font-sans font-bold uppercase">
+            <div className="bg-[#FAF9F5] border-2 border-dashed border-amber-300/80 rounded-2xl p-5 shadow-xs text-stone-900 relative font-serif">
+              <div className="text-center border-b border-amber-200 pb-3 mb-3">
+                <div className="text-xs tracking-widest text-amber-800 font-sans font-bold uppercase">
                   {instrument.bank?.name || "State Bank of India"}
                 </div>
                 <div className="text-sm font-bold mt-0.5">
                   FIXED DEPOSIT RECEIPT / TERM DEPOSIT
                 </div>
-                <div className="text-[10px] text-slate-500 font-sans">
+                <div className="text-[10px] text-stone-500 font-sans">
                   Branch: {instrument.branch_name || "Main Campus Branch"}
                 </div>
               </div>
 
               <div className="space-y-2 text-xs">
-                <div className="flex justify-between border-b border-amber-100 dark:border-amber-900 pb-1">
-                  <span className="text-slate-500 font-sans">Receipt No:</span>
-                  <span className="font-mono font-bold text-blue-700 dark:text-blue-400">
+                <div className="flex justify-between border-b border-amber-100 pb-1">
+                  <span className="text-stone-500 font-sans">Receipt No:</span>
+                  <span className="font-mono font-bold text-blue-700">
                     {instrument.reference_number}
                   </span>
                 </div>
-                <div className="flex justify-between border-b border-amber-100 dark:border-amber-900 pb-1">
-                  <span className="text-slate-500 font-sans">Pledged In Favour Of:</span>
+                <div className="flex justify-between border-b border-amber-100 pb-1">
+                  <span className="text-stone-500 font-sans">Pledged In Favour Of:</span>
                   <span className="font-bold">Member Secretary, AICTE New Delhi</span>
                 </div>
-                <div className="flex justify-between border-b border-amber-100 dark:border-amber-900 pb-1">
-                  <span className="text-slate-500 font-sans">Principal Amount:</span>
-                  <Currency amount={instrument.amount} className="text-emerald-700 dark:text-emerald-400 font-bold" />
+                <div className="flex justify-between border-b border-amber-100 pb-1">
+                  <span className="text-stone-500 font-sans">Principal Amount:</span>
+                  <Currency amount={instrument.amount} className="text-emerald-700 font-bold" />
                 </div>
-                <div className="flex justify-between border-b border-amber-100 dark:border-amber-900 pb-1">
-                  <span className="text-slate-500 font-sans">Issue Date:</span>
+                <div className="flex justify-between border-b border-amber-100 pb-1">
+                  <span className="text-stone-500 font-sans">Issue Date:</span>
                   <span className="font-mono">{instrument.issue_date}</span>
                 </div>
-                <div className="flex justify-between border-b border-amber-100 dark:border-amber-900 pb-1">
-                  <span className="text-slate-500 font-sans">Maturity Date:</span>
-                  <span className="font-mono font-bold text-amber-800 dark:text-amber-400">
+                <div className="flex justify-between border-b border-amber-100 pb-1">
+                  <span className="text-stone-500 font-sans">Maturity Date:</span>
+                  <span className="font-mono font-bold text-amber-800">
                     {instrument.maturity_date}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 font-sans">Lien Endorsement:</span>
-                  <span className="font-bold text-blue-600">
+                  <span className="text-stone-500 font-sans">Lien Endorsement:</span>
+                  <span className="font-bold text-blue-700 font-sans">
                     {instrument.lien_marked ? "MARKED IN FAVOUR OF AICTE" : "NOT MARKED"}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-amber-200 dark:border-amber-800 text-[10px] text-slate-400 font-sans flex justify-between items-center">
+              <div className="mt-4 pt-3 border-t border-amber-200 text-[10px] text-stone-500 font-sans flex justify-between items-center">
                 <span>Cryptographic SHA-256 Verified</span>
-                <span className="font-mono">8f92c...e41b</span>
+                <span className="font-mono font-bold">8f92c...e41b</span>
               </div>
             </div>
 
             {/* Discrepancy Flags on Document */}
             {openDiscrepancies.length > 0 && (
-              <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 rounded-xl p-3.5 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-rose-700 dark:text-rose-300">
+              <div className="bg-rose-50/60 border border-rose-200 rounded-2xl p-4 space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-rose-800">
                   <AlertTriangle className="w-4 h-4 text-rose-600" />
                   {openDiscrepancies.length} Open Discrepancy Flag(s)
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {openDiscrepancies.map((d) => (
                     <div
                       key={d.id}
-                      className="text-xs bg-white dark:bg-slate-800 p-2.5 rounded-lg border border-rose-100 dark:border-rose-900 flex flex-col gap-1.5"
+                      className="text-xs bg-white p-3 rounded-xl border border-rose-100 shadow-2xs flex flex-col gap-1.5"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[11px] font-bold text-rose-600">
+                        <span className="font-mono text-[11px] font-bold text-rose-700">
                           {d.rule_code}
                         </span>
-                        <span className="text-[10px] bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 px-1.5 py-0.5 rounded font-semibold">
+                        <span className="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full font-semibold">
                           {d.severity}
                         </span>
                       </div>
-                      <p className="text-slate-700 dark:text-slate-300 text-[11px]">
+                      <p className="text-stone-800 text-[11px]">
                         {d.message}
                       </p>
 
                       {resolvingId === d.id ? (
-                        <div className="mt-2 space-y-2 pt-2 border-t border-slate-100 dark:border-slate-700">
+                        <div className="mt-2 space-y-2 pt-2 border-t border-stone-100">
                           <input
                             type="text"
                             placeholder="Resolution rationale note..."
                             value={resolutionNote}
                             onChange={(e) => setResolutionNote(e.target.value)}
-                            className="w-full text-xs p-1.5 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white"
+                            className="w-full text-xs p-2 border border-stone-300 rounded-lg bg-stone-50 text-stone-900"
                           />
                           <div className="flex gap-2">
                             <button
                               onClick={() => handleResolveDiscrepancy(d.id)}
-                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold cursor-pointer"
+                              className="px-3 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full text-xs font-semibold cursor-pointer"
                             >
                               Confirm Resolution
                             </button>
                             <button
                               onClick={() => setResolvingId(null)}
-                              className="px-2.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded text-xs cursor-pointer"
+                              className="px-3 py-1 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-full text-xs cursor-pointer"
                             >
                               Cancel
                             </button>
@@ -269,7 +269,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                       ) : (
                         <button
                           onClick={() => setResolvingId(d.id)}
-                          className="self-start text-[11px] font-semibold text-blue-600 hover:underline cursor-pointer"
+                          className="self-start text-[11px] font-semibold text-blue-700 hover:underline cursor-pointer"
                         >
                           Resolve / Waive Discrepancy &rarr;
                         </button>
@@ -282,24 +282,24 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
           </div>
 
           {/* RIGHT PANEL: Scrutiny Form, Trust Badges, Bank Check (Col 7) */}
-          <div className="lg:col-span-7 p-6 flex flex-col gap-6 overflow-y-auto">
+          <div className="lg:col-span-7 p-6 bg-white flex flex-col gap-6 overflow-y-auto">
             {/* Section 1: Field-Level Trust Checklist */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Field Scrutiny & Trust Verification
+                <h3 className="text-xs font-bold uppercase tracking-wider text-stone-600">
+                  Field Scrutiny &amp; Trust Verification
                 </h3>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-stone-400 font-sans">
                   Confirm document matches recorded data
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 {/* Field 1 */}
-                <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl border border-stone-200 bg-[#FAF9F5] flex items-center justify-between shadow-2xs">
                   <div>
-                    <span className="text-[11px] text-slate-400">FDR Reference</span>
-                    <div className="font-semibold text-slate-800 dark:text-slate-100">
+                    <span className="text-[11px] text-stone-500">FDR Reference</span>
+                    <div className="font-semibold text-stone-900">
                       {instrument.reference_number}
                     </div>
                   </div>
@@ -315,17 +315,17 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                       }
                       className="w-4 h-4 text-blue-600 rounded"
                     />
-                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-[11px] font-medium text-stone-700">
                       Matches
                     </span>
                   </label>
                 </div>
 
                 {/* Field 2 */}
-                <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl border border-stone-200 bg-[#FAF9F5] flex items-center justify-between shadow-2xs">
                   <div>
-                    <span className="text-[11px] text-slate-400">Amount (INR)</span>
-                    <div className="font-semibold text-slate-800 dark:text-slate-100">
+                    <span className="text-[11px] text-stone-500">Amount (INR)</span>
+                    <div className="font-semibold text-stone-900">
                       <Currency amount={instrument.amount} />
                     </div>
                   </div>
@@ -341,17 +341,17 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                       }
                       className="w-4 h-4 text-blue-600 rounded"
                     />
-                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-[11px] font-medium text-stone-700">
                       Matches
                     </span>
                   </label>
                 </div>
 
                 {/* Field 3 */}
-                <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl border border-stone-200 bg-[#FAF9F5] flex items-center justify-between shadow-2xs">
                   <div>
-                    <span className="text-[11px] text-slate-400">Maturity Date</span>
-                    <div className="font-semibold text-slate-800 dark:text-slate-100">
+                    <span className="text-[11px] text-stone-500">Maturity Date</span>
+                    <div className="font-semibold text-stone-900">
                       {instrument.maturity_date}
                     </div>
                   </div>
@@ -367,17 +367,17 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                       }
                       className="w-4 h-4 text-blue-600 rounded"
                     />
-                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-[11px] font-medium text-stone-700">
                       Matches
                     </span>
                   </label>
                 </div>
 
                 {/* Field 4 */}
-                <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-between">
+                <div className="p-3.5 rounded-xl border border-stone-200 bg-[#FAF9F5] flex items-center justify-between shadow-2xs">
                   <div>
-                    <span className="text-[11px] text-slate-400">Lien Endorsement</span>
-                    <div className="font-semibold text-slate-800 dark:text-slate-100">
+                    <span className="text-[11px] text-stone-500">Lien Endorsement</span>
+                    <div className="font-semibold text-stone-900">
                       {instrument.lien_marked ? "In Favour of AICTE" : "Omitted"}
                     </div>
                   </div>
@@ -393,7 +393,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                       }
                       className="w-4 h-4 text-blue-600 rounded"
                     />
-                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-[11px] font-medium text-stone-700">
                       Matches
                     </span>
                   </label>
@@ -401,40 +401,40 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
               </div>
 
               {/* Scrutiny Observation input */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-stone-700">
                   Officer Observation / Scrutiny Remarks
                 </label>
                 <textarea
                   value={observationText}
                   onChange={(e) => setObservationText(e.target.value)}
                   placeholder="Record formal observation note on document integrity and AICTE compliance..."
-                  className="w-full text-xs p-2.5 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-xs p-3 border border-stone-300 rounded-xl bg-white text-stone-800 focus:ring-1 focus:ring-stone-400 placeholder:text-stone-400"
                   rows={2}
                 />
                 <button
                   onClick={handleOfficerVerify}
                   disabled={isSubmittingOfficer}
-                  className="px-4 py-2 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-2 cursor-pointer transition-colors"
+                  className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer transition-colors shadow-2xs"
                 >
-                  <UserCheck className="w-4 h-4" />
+                  <UserCheck className="w-4 h-4 text-amber-400" />
                   {isSubmittingOfficer ? "Recording..." : "Record Officer Verification & Upgrade Trust"}
                 </button>
               </div>
             </div>
 
-            <div className="h-px bg-slate-200 dark:bg-slate-800"></div>
+            <div className="h-px bg-stone-200"></div>
 
             {/* Section 2: Bank Verification Adapter Integration */}
-            <div className="bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-xl p-3.5 sm:p-4 space-y-3">
+            <div className="bg-[#FEF3C7]/40 border border-amber-200 rounded-2xl p-4 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0" />
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                    <h4 className="text-xs font-bold text-stone-900">
                       Automated Bank Verification Adapter
                     </h4>
-                    <p className="text-[11px] text-slate-500">
+                    <p className="text-[11px] text-stone-500">
                       Simulate Direct Bank CBS / SFMS API Confirmation
                     </p>
                   </div>
@@ -443,7 +443,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                   <select
                     value={bankScenario}
                     onChange={(e) => setBankScenario(e.target.value)}
-                    className="text-xs p-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded text-slate-700 dark:text-slate-200"
+                    className="text-xs p-1.5 bg-white border border-stone-300 rounded-full text-stone-800"
                   >
                     <option value="MATCH">Scenario: Full Match (Happy Path)</option>
                     <option value="MISMATCH">Scenario: Amount Mismatch (Discrepancy)</option>
@@ -453,7 +453,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                   <button
                     onClick={handleBankVerify}
                     disabled={isVerifyingBank}
-                    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
+                    className="px-4 py-1.5 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-full text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isVerifyingBank ? "animate-spin" : ""}`} />
                     {isVerifyingBank ? "Calling Bank..." : "Trigger Bank Check"}
@@ -462,15 +462,15 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
               </div>
 
               {bankResult && (
-                <div className="mt-2 text-xs bg-white dark:bg-slate-900 p-3 rounded-lg border border-blue-100 dark:border-blue-950 space-y-1 font-mono">
+                <div className="mt-2 text-xs bg-white p-3.5 rounded-xl border border-amber-200 space-y-1 font-mono">
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Response Status:</span>
-                    <span className={`font-bold ${bankResult.result === "MATCH" ? "text-emerald-600" : "text-rose-600"}`}>
+                    <span className="text-stone-500">Response Status:</span>
+                    <span className={`font-bold ${bankResult.result === "MATCH" ? "text-emerald-700" : "text-rose-700"}`}>
                       {bankResult.result}
                     </span>
                   </div>
                   {bankResult.response_payload && (
-                    <pre className="text-[10px] text-slate-600 dark:text-slate-400 overflow-x-auto p-1 bg-slate-50 dark:bg-slate-800 rounded">
+                    <pre className="text-[10px] text-stone-700 overflow-x-auto p-2 bg-stone-50 rounded-lg">
                       {JSON.stringify(bankResult.response_payload, null, 2)}
                     </pre>
                   )}
@@ -480,14 +480,14 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
 
             {/* Section 3: State Machine Transitions */}
             <div className="space-y-2 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600">
                 Authorized State Transitions
               </h4>
               <div className="flex flex-wrap gap-2">
                 {instrument.status === "SUBMITTED" && (
                   <button
                     onClick={() => handleTransition("UNDER_SCRUTINY", "Officer initiated formal scrutiny")}
-                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg font-medium cursor-pointer"
+                    className="px-3.5 py-1.5 bg-indigo-700 hover:bg-indigo-800 text-white text-xs rounded-full font-medium cursor-pointer shadow-2xs"
                   >
                     Take Up for Scrutiny
                   </button>
@@ -496,13 +496,13 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                   <>
                     <button
                       onClick={() => handleTransition("VERIFIED", "Scrutiny completed successfully")}
-                      className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs rounded-lg font-medium cursor-pointer"
+                      className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs rounded-full font-medium cursor-pointer shadow-2xs"
                     >
                       Mark as Verified
                     </button>
                     <button
                       onClick={() => handleTransition("RESUBMISSION_REQUIRED", "Discrepancy notice sent to institution")}
-                      className="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-xs rounded-lg font-medium cursor-pointer"
+                      className="px-3.5 py-1.5 bg-amber-700 hover:bg-amber-800 text-white text-xs rounded-full font-medium cursor-pointer shadow-2xs"
                     >
                       Request Resubmission
                     </button>
@@ -511,7 +511,7 @@ export const CaseWorkspace: React.FC<CaseWorkspaceProps> = ({
                 {instrument.status === "VERIFIED" && (
                   <button
                     onClick={() => handleTransition("ACTIVE", "Accepted as valid security deposit pledge")}
-                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs rounded-lg font-medium cursor-pointer"
+                    className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs rounded-full font-medium cursor-pointer shadow-2xs"
                   >
                     Accept as Active Security
                   </button>

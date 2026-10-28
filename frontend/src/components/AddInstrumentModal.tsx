@@ -82,39 +82,39 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl max-h-[92vh] shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 font-sans">
+      <div className="bg-[#FAF9F5] border border-stone-200 rounded-3xl w-full max-w-2xl max-h-[92vh] shadow-2xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
-          <div className="flex items-center gap-2.5">
-            <span className="p-2 bg-blue-100 dark:bg-blue-950 text-blue-600 rounded-lg shrink-0">
+        <div className="px-6 py-4 border-b border-stone-200/80 flex items-center justify-between bg-white">
+          <div className="flex items-center gap-3">
+            <span className="p-2.5 bg-amber-100 text-amber-800 rounded-xl shrink-0 shadow-2xs">
               <Upload className="w-5 h-5" />
             </span>
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">
+              <h2 className="font-serif text-lg font-bold text-stone-900">
                 Submit New Security Deposit / FDR
               </h2>
-              <p className="text-[11px] sm:text-xs text-slate-500">
+              <p className="text-[11px] sm:text-xs text-stone-500 font-sans">
                 AICTE Regulation Bureau • Intake Stepper
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <button onClick={onClose} className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Stepper Progress */}
-        <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-100/70 dark:bg-slate-800/30 flex items-center justify-between text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 overflow-x-auto whitespace-nowrap gap-2">
-          <span className={step === 1 ? "text-blue-600 font-bold shrink-0" : "shrink-0"}>
-            1. Document & OCR
+        <div className="px-6 py-3 bg-stone-100/70 flex items-center justify-between text-[11px] sm:text-xs font-semibold text-stone-600 border-b border-stone-200 overflow-x-auto whitespace-nowrap gap-2">
+          <span className={step === 1 ? "text-amber-800 font-bold shrink-0" : "shrink-0"}>
+            1. Document &amp; OCR
           </span>
-          <span className="shrink-0 text-slate-400">&rarr;</span>
-          <span className={step === 2 ? "text-blue-600 font-bold shrink-0" : "shrink-0"}>
+          <span className="shrink-0 text-stone-400">&rarr;</span>
+          <span className={step === 2 ? "text-amber-800 font-bold shrink-0" : "shrink-0"}>
             2. Trust Review
           </span>
-          <span className="shrink-0 text-slate-400">&rarr;</span>
-          <span className={step === 3 ? "text-blue-600 font-bold shrink-0" : "shrink-0"}>
+          <span className="shrink-0 text-stone-400">&rarr;</span>
+          <span className={step === 3 ? "text-amber-800 font-bold shrink-0" : "shrink-0"}>
             3. Submission
           </span>
         </div>
@@ -123,13 +123,13 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
         <div className="p-4 sm:p-6 flex-1 overflow-y-auto space-y-4">
           {step === 1 && (
             <div className="space-y-4 text-center">
-              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center gap-3 bg-slate-50/50 dark:bg-slate-950/20">
-                <FileText className="w-12 h-12 text-blue-600 opacity-80" />
+              <div className="border-2 border-dashed border-stone-300 rounded-2xl p-8 flex flex-col items-center justify-center gap-3 bg-white shadow-2xs">
+                <FileText className="w-12 h-12 text-amber-600 opacity-80" />
                 <div>
-                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                  <p className="text-sm font-semibold text-stone-900">
                     Upload Scanned FDR Certificate or Bank Guarantee
                   </p>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-stone-500 mt-0.5">
                     Supports PDF, JPG, PNG up to 10MB (Magic byte verified)
                   </p>
                 </div>
@@ -137,19 +137,19 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
                   type="button"
                   onClick={handleSimulateOCR}
                   disabled={isExtracting}
-                  className="mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-sm transition-all"
+                  className="mt-2 px-5 py-2.5 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-xs transition-all"
                 >
-                  <Sparkles className="w-4 h-4 text-yellow-300" />
+                  <Sparkles className="w-4 h-4 text-amber-950" />
                   {isExtracting ? "Analyzing Document & Extracting Fields..." : "Scan & Extract with AI-OCR"}
                 </button>
               </div>
 
-              <div className="text-left bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg border border-blue-200 dark:border-blue-900 text-xs text-slate-600 dark:text-slate-300 space-y-1">
-                <div className="font-semibold text-blue-800 dark:text-blue-300 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
+              <div className="text-left bg-white p-4 rounded-2xl border border-stone-200 text-xs text-stone-600 space-y-1 shadow-2xs">
+                <div className="font-semibold text-stone-900 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-700" />
                   Three-Tier Trust Protection Note
                 </div>
-                <p className="text-[11px]">
+                <p className="text-[11px] text-stone-500">
                   All OCR extracted data is initially tagged with <b>SUBMITTED</b> trust. The system will independently run bank verification checks and scrutiny verification before formal release eligibility.
                 </p>
               </div>
@@ -157,82 +157,82 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
           )}
 
           {step === 2 && (
-            <div className="space-y-3 text-xs">
+            <div className="space-y-3 text-xs bg-white p-5 rounded-2xl border border-stone-200 shadow-xs">
               {ocrData && (
-                <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 flex items-center justify-between text-xs">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-center justify-between text-xs">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700" />
                     OCR extracted values with 94% confidence!
                   </span>
-                  <span className="font-mono text-[11px]">Confidence: {ocrData.confidence * 100}%</span>
+                  <span className="font-mono text-[11px] font-bold">Confidence: {ocrData.confidence * 100}%</span>
                 </div>
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     FDR Reference Number *
                   </label>
                   <input
                     type="text"
                     value={referenceNumber}
                     onChange={(e) => setReferenceNumber(e.target.value)}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 font-mono text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white font-mono text-stone-900"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     Principal Amount (INR) *
                   </label>
                   <input
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 font-mono text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white font-mono text-stone-900"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     Issue Date *
                   </label>
                   <input
                     type="date"
                     value={issueDate}
                     onChange={(e) => setIssueDate(e.target.value)}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     Maturity Date *
                   </label>
                   <input
                     type="date"
                     value={maturityDate}
                     onChange={(e) => setMaturityDate(e.target.value)}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     Issuing Branch Name
                   </label>
                   <input
                     type="text"
                     value={branchName}
                     onChange={(e) => setBranchName(e.target.value)}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="font-medium text-slate-700 dark:text-slate-300">
+                  <label className="font-medium text-stone-700">
                     Regulatory Purpose
                   </label>
                   <input
                     type="text"
                     value={purpose}
                     onChange={(e) => setPurpose(e.target.value)}
-                    className="w-full mt-1 p-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                    className="w-full mt-1 p-2.5 border border-stone-300 rounded-xl bg-white text-stone-900"
                   />
                 </div>
               </div>
@@ -245,7 +245,7 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
                     onChange={(e) => setLienMarked(e.target.checked)}
                     className="w-4 h-4 text-blue-600 rounded"
                   />
-                  <span className="font-medium text-slate-800 dark:text-slate-200">
+                  <span className="font-medium text-stone-800">
                     Lien marked in favour of Member Secretary, AICTE New Delhi
                   </span>
                 </label>
@@ -255,11 +255,11 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex justify-between items-center">
+        <div className="px-6 py-3.5 border-t border-stone-200 bg-white flex justify-between items-center">
           {step > 1 ? (
             <button
               onClick={() => setStep(step - 1)}
-              className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-800 cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-stone-600 hover:text-stone-900 cursor-pointer rounded-full"
             >
               &larr; Back
             </button>
@@ -270,7 +270,7 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
           {step === 1 ? (
             <button
               onClick={() => setStep(2)}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold cursor-pointer"
+              className="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-full text-xs font-semibold cursor-pointer shadow-xs"
             >
               Enter Details Manually &rarr;
             </button>
@@ -278,7 +278,7 @@ export const AddInstrumentModal: React.FC<AddInstrumentModalProps> = ({
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-sm"
+              className="px-6 py-2.5 bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-xs transition-all"
             >
               <CheckCircle2 className="w-4 h-4" />
               {isSubmitting ? "Submitting..." : "Submit to AICTE Portal"}
