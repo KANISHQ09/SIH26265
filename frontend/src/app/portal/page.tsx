@@ -554,19 +554,20 @@ export default function Home() {
             {roleConfig.kpiCards(summary, kpis).map((card, idx) => (
               <div
                 key={idx}
-                className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between hover:shadow-sm transition-all"
+                className="bg-white p-3.5 sm:p-4 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between hover:shadow-sm transition-all min-w-0"
               >
-                <span className="text-[11px] sm:text-xs font-semibold text-stone-500 uppercase tracking-wider line-clamp-1 font-sans">
+                <span className="text-[11px] sm:text-xs font-semibold text-stone-500 uppercase tracking-wide line-clamp-2 min-h-[2.2rem] flex items-start font-sans leading-snug">
                   {card.label}
                 </span>
                 <div
-                  className={`mt-2 text-2xl sm:text-3xl font-serif font-bold ${
+                  className={`my-1.5 text-lg sm:text-xl lg:text-[22px] xl:text-2xl font-serif font-bold tracking-tight truncate ${
                     card.color || "text-stone-900"
                   }`}
+                  title={typeof card.value === "string" ? card.value : undefined}
                 >
                   {card.value}
                 </div>
-                <span className="text-[10px] sm:text-[11px] text-stone-500 mt-1 line-clamp-1 font-sans">
+                <span className="text-[10px] sm:text-[11px] text-stone-500 line-clamp-2 font-sans leading-tight">
                   {card.caption}
                 </span>
               </div>

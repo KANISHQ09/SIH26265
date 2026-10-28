@@ -12,13 +12,14 @@ import {
   Play, Shield, ChevronDown, Check, X, ArrowUpRight, 
   Sparkles, Compass, Eye, HeartHandshake, Lock, Building2,
   FileText, CheckCircle2, AlertTriangle, Clock, RefreshCw,
-  Search, ShieldCheck, ArrowRight
+  Search, ShieldCheck, ArrowRight, Menu
 } from "lucide-react";
 
 export default function LandingPage() {
   const router = useRouter();
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
   const [isArchModalOpen, setIsArchModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const testimonials = [
@@ -90,19 +91,28 @@ export default function LandingPage() {
 
   const trustMatrix = [
     {
-      level: "⚪ SUBMITTED",
+      code: "SUBMITTED",
+      label: "SUBMITTED",
+      dotBg: "bg-purple-500",
+      badgeClass: "bg-purple-50 text-purple-900 border-purple-200",
       origin: "Institution / OCR Scan",
       legalStatus: "Provisional (Non-authoritative)",
       verification: "Raw extracted data pending human or automated audit",
     },
     {
-      level: "🟡 OFFICER_VERIFIED",
+      code: "OFFICER_VERIFIED",
+      label: "OFFICER_VERIFIED",
+      dotBg: "bg-amber-500",
+      badgeClass: "bg-amber-50 text-amber-950 border-amber-300",
       origin: "Scrutiny Officer (Desk 1)",
       legalStatus: "Substantive Regulatory Sign-off",
       verification: "Reconciled with original physical/signed branch confirmation letter",
     },
     {
-      level: "🟢 BANK_CONFIRMED",
+      code: "BANK_CONFIRMED",
+      label: "BANK_CONFIRMED",
+      dotBg: "bg-emerald-500",
+      badgeClass: "bg-emerald-50 text-emerald-950 border-emerald-300",
       origin: "Direct Scheduled Bank Adapter",
       legalStatus: "Authoritative Financial Assurance",
       verification: "Machine-to-machine validation via SBI, PNB, HDFC, or Canara API",
@@ -143,53 +153,106 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#FAF9F5] text-stone-900 selection:bg-amber-200 selection:text-amber-950 font-sans antialiased">
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-stone-200/50 transition-all">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Left: Gold & Stone Regulatory Brand Logo + Nav Links */}
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              className="flex items-center gap-2.5 group cursor-pointer"
-              title="Zetsu AICTE Portal"
-            >
-              <Logo size={36} showText={true} />
-            </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+          {/* Left: Brand Logo */}
+          <Link
+            href="/"
+            className="flex items-center shrink-0 group cursor-pointer"
+            title="Zetsu AICTE Portal"
+          >
+            <Logo size={36} showText={true} />
+          </Link>
 
-            {/* Subtle Nav Links */}
-            <nav className="hidden md:flex items-center space-x-7 text-xs uppercase tracking-widest text-stone-600 font-medium">
-              <a href="#about" className="hover:text-stone-950 transition-colors">
-                The Architecture
-              </a>
-              <a href="#pillars" className="hover:text-stone-950 transition-colors">
-                Trust Engine
-              </a>
-              <a href="#provenance" className="hover:text-stone-950 transition-colors">
-                3-Tier Provenance
-              </a>
-              <a href="#faq" className="hover:text-stone-950 transition-colors">
-                Regulatory FAQ
-              </a>
-            </nav>
-          </div>
+          {/* Center: Desktop Nav Links (Spaced out, clean, only on xl screens where plenty of room exists) */}
+          <nav className="hidden xl:flex items-center space-x-8 text-xs uppercase tracking-widest text-stone-600 font-medium shrink-0">
+            <a href="#about" className="hover:text-stone-950 transition-colors whitespace-nowrap">
+              Architecture
+            </a>
+            <a href="#pillars" className="hover:text-stone-950 transition-colors whitespace-nowrap">
+              Trust Engine
+            </a>
+            <a href="#provenance" className="hover:text-stone-950 transition-colors whitespace-nowrap">
+              Provenance
+            </a>
+            <a href="#faq" className="hover:text-stone-950 transition-colors whitespace-nowrap">
+              FAQ
+            </a>
+          </nav>
 
-          {/* Right Action: Launch Portal with Warm Gold Theme */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          {/* Right Action: Launch Portal & Verify Desk */}
+          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
             <button
               onClick={() => setIsRoleModalOpen(true)}
-              className="border border-stone-300 hover:border-stone-800 bg-white/80 hover:bg-white text-stone-800 text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full transition-all shadow-2xs hover:shadow-xs cursor-pointer"
+              className="hidden md:inline-flex border border-stone-300 hover:border-stone-800 bg-white/80 hover:bg-white text-stone-800 text-xs font-semibold uppercase tracking-wider px-3.5 sm:px-4 py-2 rounded-full transition-all shadow-2xs hover:shadow-xs cursor-pointer whitespace-nowrap"
             >
               Verify Desk
             </button>
             <Link
               href="/portal"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 text-xs font-bold tracking-wide transition-all shadow-xs hover:shadow-md group cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#F59E0B] hover:bg-[#EAA00A] text-stone-950 text-xs font-bold tracking-wide transition-all shadow-xs hover:shadow-md group cursor-pointer whitespace-nowrap"
               title="Enter FDR Portal Workspace"
             >
-              <Logo size={20} />
               <span>Launch Portal</span>
-              <ArrowUpRight size={14} className="opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={14} className="opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
             </Link>
+
+            {/* Mobile/Tablet Menu Button for screens < xl */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="xl:hidden p-2 rounded-full border border-stone-200/80 bg-white/80 hover:bg-white text-stone-700 hover:text-stone-950 transition-colors cursor-pointer shadow-2xs"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile / Tablet Drawer Menu */}
+        {isMobileMenuOpen && (
+          <div className="xl:hidden bg-[#FAF9F5] border-b border-stone-200/80 px-6 py-4 space-y-3 shadow-md animate-in slide-in-from-top-2 duration-200">
+            <nav className="flex flex-col space-y-2.5 text-xs uppercase tracking-widest text-stone-700 font-semibold">
+              <a
+                href="#about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-amber-700 py-1.5 transition-colors"
+              >
+                The Architecture
+              </a>
+              <a
+                href="#pillars"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-amber-700 py-1.5 transition-colors"
+              >
+                Trust Engine
+              </a>
+              <a
+                href="#provenance"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-amber-700 py-1.5 transition-colors"
+              >
+                3-Tier Provenance
+              </a>
+              <a
+                href="#faq"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-amber-700 py-1.5 transition-colors"
+              >
+                Regulatory FAQ
+              </a>
+            </nav>
+            <div className="pt-2 border-t border-stone-200/60 md:hidden flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsRoleModalOpen(true);
+                }}
+                className="w-full text-center border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 text-xs font-semibold uppercase tracking-wider py-2.5 rounded-full shadow-2xs transition-colors"
+              >
+                Verify Desk
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Main Container */}
@@ -430,29 +493,60 @@ export default function LandingPage() {
           </div>
 
           <div className="bg-white/90 border border-stone-200 rounded-2xl overflow-hidden shadow-xs">
-            <div className="grid grid-cols-12 bg-stone-100/70 border-b border-stone-200 text-xs font-semibold uppercase tracking-wider text-stone-600 px-6 py-4">
-              <div className="col-span-4 sm:col-span-3">Trust Tier</div>
-              <div className="col-span-4 sm:col-span-4 text-stone-900 font-serif normal-case text-sm">
-                Provenance Origin
-              </div>
-              <div className="col-span-4 sm:col-span-5 text-stone-500">
-                Verification Rigor &amp; Evidentiary Value
+            {/* Desktop / Tablet Table View (with horizontal scroll safety) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <div className="min-w-[640px]">
+                <div className="grid grid-cols-12 bg-stone-100/70 border-b border-stone-200 text-xs font-semibold uppercase tracking-wider text-stone-600 px-6 py-4">
+                  <div className="col-span-4 lg:col-span-3">Trust Tier</div>
+                  <div className="col-span-4 lg:col-span-4 text-stone-900 font-serif normal-case text-sm">
+                    Provenance Origin
+                  </div>
+                  <div className="col-span-4 lg:col-span-5 text-stone-500">
+                    Verification Rigor &amp; Evidentiary Value
+                  </div>
+                </div>
+
+                <div className="divide-y divide-stone-200/70 text-xs sm:text-sm">
+                  {trustMatrix.map((item, i) => (
+                    <div key={i} className="grid grid-cols-12 px-6 py-5 gap-4 items-center">
+                      <div className="col-span-4 lg:col-span-3">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-xs font-semibold border ${item.badgeClass} shadow-2xs whitespace-nowrap`}>
+                          <span className={`w-2 h-2 rounded-full ${item.dotBg} shrink-0`} />
+                          {item.label}
+                        </span>
+                      </div>
+                      <div className="col-span-4 lg:col-span-4 text-stone-800 font-medium">
+                        <div>{item.origin}</div>
+                        <span className="block text-[11px] text-stone-400 font-normal mt-0.5">{item.legalStatus}</span>
+                      </div>
+                      <div className="col-span-4 lg:col-span-5 text-stone-600 font-sans leading-relaxed">
+                        {item.verification}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="divide-y divide-stone-200/70 text-xs sm:text-sm">
+            {/* Mobile Responsive Stacked Card View */}
+            <div className="block sm:hidden divide-y divide-stone-200/70">
               {trustMatrix.map((item, i) => (
-                <div key={i} className="grid grid-cols-12 px-6 py-5 gap-3 items-center">
-                  <div className="col-span-4 sm:col-span-3 font-semibold text-stone-900 font-mono text-xs">
-                    {item.level}
+                <div key={i} className="p-4 space-y-2.5 bg-white/70">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-xs font-semibold border ${item.badgeClass} shadow-2xs`}>
+                      <span className={`w-2 h-2 rounded-full ${item.dotBg} shrink-0`} />
+                      {item.label}
+                    </span>
+                    <span className="text-[11px] text-stone-400 font-normal">
+                      {item.legalStatus}
+                    </span>
                   </div>
-                  <div className="col-span-4 sm:col-span-4 text-stone-800 font-medium">
+                  <div className="text-stone-900 font-medium text-sm">
                     {item.origin}
-                    <span className="block text-[11px] text-stone-400 font-normal">{item.legalStatus}</span>
                   </div>
-                  <div className="col-span-4 sm:col-span-5 text-stone-600 font-sans leading-relaxed">
+                  <p className="text-xs text-stone-600 leading-relaxed font-sans">
                     {item.verification}
-                  </div>
+                  </p>
                 </div>
               ))}
             </div>
@@ -611,15 +705,7 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="border-t border-stone-200/70 bg-[#FAF9F5] py-14 px-6 text-stone-500 text-xs">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <Emblem size={26} className="text-stone-800" />
-            <div className="text-left">
-              <span className="font-script text-xl text-stone-800 block leading-tight">zetsu</span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-widest font-semibold">
-                AICTE FDR &amp; Security Deposit Governance Portal
-              </span>
-            </div>
-          </div>
+          <Logo size={28} showText={true} />
 
           <div className="text-center sm:text-right space-y-1">
             <p>© 2026 Zetsu · All India Council for Technical Education (AICTE)</p>

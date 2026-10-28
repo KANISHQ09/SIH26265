@@ -90,23 +90,10 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Brand - Click to Return to Landing Page */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
+            className="flex items-center group cursor-pointer"
             title="← Back to Landing Page"
           >
-            <Logo size={36} />
-            <div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-stone-900 group-hover:text-amber-800 transition-colors">
-                  Zetsu
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-wider bg-[#FEF3C7] text-amber-950 border border-amber-300/60 px-2 py-0.5 rounded-full whitespace-nowrap font-sans">
-                  FDR Portal
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-stone-500 line-clamp-1 font-sans">
-                Security Deposit Lifecycle &amp; Compliance Gateway
-              </p>
-            </div>
+            <Logo size={36} showText={true} />
           </Link>
 
           {/* Role Switcher Button (Mobile view inside top bar) */}

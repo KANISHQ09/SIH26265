@@ -1,48 +1,43 @@
 import React from "react";
+import { Emblem } from "./Emblem";
 
 interface LogoProps {
   size?: number;
   className?: string;
   showText?: boolean;
+  subtitle?: string;
   textClassName?: string;
+  subtitleClassName?: string;
 }
 
 export const Logo: React.FC<LogoProps> = ({
   size = 36,
   className = "",
   showText = false,
+  subtitle = "AICTE FDR & SECURITY DEPOSIT GOVERNANCE PORTAL",
   textClassName = "",
+  subtitleClassName = "",
 }) => {
   return (
-    <div className={`inline-flex items-center gap-2.5 ${className}`}>
-      <div
-        style={{ width: size, height: size }}
-        className="relative shrink-0 rounded-xl overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105"
-      >
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Clean Dark Stone Base */}
-          <rect width="100" height="100" rx="24" fill="#1C1917" />
-
-          {/* Simple Bold Amber Z */}
-          <path
-            d="M 28 30 H 72 L 32 70 H 72"
-            stroke="#F59E0B"
-            strokeWidth="12"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
+    <div className={`inline-flex items-center gap-2.5 sm:gap-3 shrink-0 ${className}`}>
+      <Emblem
+        size={size}
+        className="text-stone-900 shrink-0 transition-transform group-hover:scale-105"
+      />
 
       {showText && (
-        <span className={`font-serif text-lg font-bold tracking-tight text-stone-900 group-hover:text-amber-800 transition-colors ${textClassName}`}>
-          Zetsu
-        </span>
+        <div className="flex flex-col justify-center leading-none select-none shrink-0">
+          <span
+            className={`font-serif italic text-xl sm:text-[22px] font-normal text-stone-900 tracking-tight leading-none whitespace-nowrap group-hover:text-amber-800 transition-colors ${textClassName}`}
+          >
+            zetsu
+          </span>
+          <span
+            className={`hidden sm:block text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5B7B94] mt-1 sm:mt-1.5 leading-none whitespace-nowrap ${subtitleClassName}`}
+          >
+            {subtitle}
+          </span>
+        </div>
       )}
     </div>
   );
